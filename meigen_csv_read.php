@@ -4,13 +4,34 @@
 // exit();
 $str = ''; //変数準備
 $file = fopen('data/meigen.csv', 'r'); //csvファイルを読み込みモードで表示
+$newAry = array();//配列の準備
+$row = 0;//配列の行数
 
 flock($file, LOCK_EX); //ファイルにアクセスする間はロックする！
 if ($file) { //ファイルがあったときに動作する(while文使うので、条件に合わないやつは弾いておかないと危険(終わらなくなる))
   while ($line = fgets($file)) {
-    $str .= "<tr><td>($line)</td></tr>";
+  //   $str .= "<tr><td>($line)</td></tr>";// .= : ドットイコールは上書きではなく追加結合していく
+    $newAry[]=$line;
+    echo "$row\n";
+    echo "${newAry[$row]}\n";
+    $row++;
+    echo "'<br>'";
   }
+// var_dump($newAry);
+// exit();
 
+
+  // とりあえずfgetcsvを試してみた
+  // echoだと、HTMLの書式設定より更に前で出力してしまう。
+  // 今の状態は、結局行ごとになっている。
+  // while ($line = fgetcsv($file)){
+  //   echo "$row\n";
+  //   $row++;
+  //   foreach($line as $value){
+  //     echo "${value}\n";
+  //   }
+  //   echo "'<br>'";
+  // }
 
 // *********  csvのファイルを読み、一つ一つ取り出す(うち一つをリンクにする！)  *********
         // foreach ($file as $lineNum => $line) {
@@ -56,7 +77,8 @@ fclose($file); //ファイルを閉じる
       <tbody>
         <tr>
           <!-- １行ずつ読んだ変数(PHP)を呼び出し -->
-          <th><?= "$str" ?></th>
+<!-- 配列じゃない時：$str -->
+          <th><?= "$newAry()" ?></th>
         </tr>
       </tbody>
     </table>
