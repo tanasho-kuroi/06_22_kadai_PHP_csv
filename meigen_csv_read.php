@@ -11,11 +11,14 @@ flock($file, LOCK_EX); //ファイルにアクセスする間はロックする�
 if ($file) { //ファイルがあったときに動作する(while文使うので、条件に合わないやつは弾いておかないと危険(終わらなくなる))
   while ($line = fgets($file)) {
   //   $str .= "<tr><td>($line)</td></tr>";// .= : ドットイコールは上書きではなく追加結合していく
-    $newAry[]=$line;
+    $newAry[]=$line;// 配列にする意味：１行ごとではなく、一つ一つを取り出したいから。。。のはずが、結局ラインごとになっている
     echo "$row\n";
     echo "${newAry[$row]}\n";
+    //ラインごとで入れているから、ラインごとしか取り出せない！
+    // echo "${newAry[$row][0]}\n";
+    // echo "https://www.google.com/search?q={$newAry[$row][1]}'<br>'";
     $row++;
-    echo "'<br>'";
+    "";
   }
 // var_dump($newAry);
 // exit();
@@ -79,6 +82,32 @@ fclose($file); //ファイルを閉じる
           <!-- １行ずつ読んだ変数(PHP)を呼び出し -->
 <!-- 配列じゃない時：$str -->
           <th><?= "$newAry()" ?></th>
+
+<?php //HTMLのbody内に書き込んでもおkー！！
+// csvファイルを開き、中身を１行ずつ読む。その後Webページに一覧画面を表示する。
+// var_dump($_POST);
+// exit();
+$str = ''; //変数準備
+$file = fopen('data/meigen.csv', 'r'); //csvファイルを読み込みモードで表示
+$newAry = array();//配列の準備
+$row = 0;//配列の行数
+
+flock($file, LOCK_EX); //ファイルにアクセスする間はロックする！
+if ($file) { //ファイルがあったときに動作する(while文使うので、条件に合わないやつは弾いておかないと危険(終わらなくなる))
+  while ($line = fgets($file)) {
+  //   $str .= "<tr><td>($line)</td></tr>";// .= : ドットイコールは上書きではなく追加結合していく
+    $newAry[]=$line;// 配列にする意味：１行ごとではなく、一つ一つを取り出したいから。。。のはずが、結局ラインごとになっている
+    echo "$row\n";
+    echo "${newAry[$row]}\n";
+    $row++;
+    echo "'<br>'";
+  }
+}
+flock($file, LOCK_UN); //ファイルにアクセスし終わったのでロック解除する
+fclose($file); //ファイルを閉じる
+?>
+
+
         </tr>
       </tbody>
     </table>

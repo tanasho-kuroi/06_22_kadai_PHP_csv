@@ -23,8 +23,10 @@ if (!(file_exists($file_name))) { //ファイルがあったときに動作す�
 
 
 // *********  データのうち一つをリンクにしてcsvに書き込み→csvにタグもそのまま書き込まれてしまう)  *********
-$data_link="<a href=\"https://www.google.com/search?q={$meigen}\">検索：{$meigen}</a>";
-$write_data = "{$date},{$meigen},{$data_link}\n"; //書き込むデータの準備
+// $data_link="https://www.google.com/search?q={$meigen}";
+// $data_link="<a href=\"https://www.google.com/search?q={$meigen}\">検索：{$meigen}</a>";
+// $write_data = "{$date},{$meigen},{$data_link}\n"; //書き込むデータの準備
+$write_data = "{$date},{$meigen}\n"; //書き込むデータの準備
 // $write_data = "{$date},{$meigen},https://www.google.com/search?q={$meigen}\n"; //書き込むデータの準備
 // $write_data = "{$date},{$meigen},<a href='https://www.google.com/search?q={$meigen}'></a>\n"; //書き込むデータの準備
 $file = fopen('data/meigen.csv', 'a'); //meigen.csvを開く。引数はa(追加書き込みのみ)
